@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="EngishMotherFucker.AddWordPage"
+    Title="Добавить слово"
+    BackgroundColor="Black"
+    NavigationPage.HasNavigationBar="True">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="Английское слово" TextColor="White"/>
+            <Entry x:Name="WordEntry" Placeholder="Введите слово" BackgroundColor="#222" TextColor="White"/>
+
+            <Label Text="Перевод" TextColor="White"/>
+            <Entry x:Name="TranslationEntry" Placeholder="Введите перевод" BackgroundColor="#222" TextColor="White"/>
+
+            <Label Text="Транскрипция" TextColor="White"/>
+            <Entry x:Name="TranscriptionEntry" Placeholder="Например, [æpl]" BackgroundColor="#222" TextColor="White"/>
+
+            <Label Text="Определение (англ.)" TextColor="White"/>
+            <Entry x:Name="DefinitionEnEntry" Placeholder="Описание на английском" BackgroundColor="#222" TextColor="White"/>
+
+            <Label Text="Определение (рус.)" TextColor="White"/>
+            <Entry x:Name="DefinitionRuEntry" Placeholder="Описание на русском" BackgroundColor="#222" TextColor="White"/>
+
+            <Label Text="Тема" TextColor="White"/>
+            <Entry x:Name="TopicEntry" Placeholder="Категория или тема" BackgroundColor="#222" TextColor="White"/>
+
+            <Button Text="Сохранить" 
+                    Clicked="OnSaveClicked"
+                    BackgroundColor="#6200EE"
+                    TextColor="White"/>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

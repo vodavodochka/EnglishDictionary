@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:EngishMotherFucker"
+             x:Class="EngishMotherFucker.MainPage"
+             x:Name="MainPageRef"
+             NavigationPage.HasNavigationBar="False">
+	<ContentPage.BindingContext>
+		<local:MainPageViewModel/>
+	</ContentPage.BindingContext>
+    <Grid RowDefinitions="Auto, *" Padding="10">
+
+        <!-- Кнопки -->
+        <HorizontalStackLayout Spacing="10" Grid.Row="0" Margin="0,0,0,10" >
+            <Button Text="Добавить слово" Command="{Binding AddWordCommand}" />
+            <Button Text="Тренажёр" Command="{Binding StartTrainerCommand}" />
+            <Button Text="⚙" Command="{Binding OpenSettingsCommand}" />
+        </HorizontalStackLayout>
+
+        <!-- Слова -->
+        <CollectionView ItemsSource="{Binding Words}"
+                Grid.Row="1">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem
+                                    Text="Удалить"
+                                    BackgroundColor="Red"
+                                    IconImageSource="delete.png" 
+                                    Command="{Binding Source={x:Reference MainPageRef}, Path=BindingContext.DeleteWordCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+
+                        <Grid Padding="10" ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                            <StackLayout>
+                                <Label Text="{Binding Word}" FontAttributes="Bold" FontSize="18"  />
+                                <Label Text="{Binding Translation}" FontSize="14" TextColor="Gray"/>
+                            </StackLayout>
+                        </Grid>
+
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
