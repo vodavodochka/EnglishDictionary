@@ -20,9 +20,21 @@ namespace EngishMotherFucker
             }
 #endif
         }
+
         private async void OnRequestAddWordPage()
         {
             await Navigation.PushAsync(new AddWordPage());
+        }
+
+        private async void OnWordSelected(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.CurrentSelection.FirstOrDefault() is WordModel selectedWord)
+            {
+                // Переход на страницу редактирования
+                await Navigation.PushAsync(new EditWordPage(selectedWord, ViewModel));
+            }
+
+            ((CollectionView)sender).SelectedItem = null;
         }
     }
 }

@@ -22,14 +22,12 @@ namespace EngishMotherFucker
         public ICommand AddWordCommand { get; }
         public ICommand StartTrainerCommand { get; }
         public ICommand OpenSettingsCommand { get; }
-        public ICommand DeleteWordCommand { get; }
 
         public MainPageViewModel()
         {
             AddWordCommand = new Command(OnAddWord);
             StartTrainerCommand = new Command(OnStartTrainer);
             OpenSettingsCommand = new Command(OnOpenSettings);
-            DeleteWordCommand = new Command<WordModel>(OnDeleteWord);
 
             // Пример
             Words.Add(new WordModel { Word= "Apple" , DefinitionEn = "red or green and sweet fruit" });
@@ -61,12 +59,6 @@ namespace EngishMotherFucker
         private void OnOpenSettings()
         {
             // TODO: Открытие настроек
-        }
-
-        private void OnDeleteWord(WordModel word)
-        {
-            if (Words.Contains(word))
-                Words.Remove(word);
         }
     }
 }

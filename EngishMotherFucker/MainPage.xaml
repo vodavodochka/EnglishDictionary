@@ -19,21 +19,13 @@
 
         <!-- Слова -->
         <CollectionView ItemsSource="{Binding Words}"
-                Grid.Row="1">
+                Grid.Row="1"
+                SelectionMode="Single"
+                SelectionChanged="OnWordSelected">
+            
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <SwipeView>
-                        <SwipeView.RightItems>
-                            <SwipeItems>
-                                <SwipeItem
-                                    Text="Удалить"
-                                    BackgroundColor="Red"
-                                    IconImageSource="delete.png" 
-                                    Command="{Binding Source={x:Reference MainPageRef}, Path=BindingContext.DeleteWordCommand}"
-                                    CommandParameter="{Binding .}" />
-                            </SwipeItems>
-                        </SwipeView.RightItems>
-
                         <Grid Padding="10" ColumnDefinitions="*,Auto" VerticalOptions="Center">
                             <StackLayout>
                                 <Label Text="{Binding Word}" FontAttributes="Bold" FontSize="18"  />
