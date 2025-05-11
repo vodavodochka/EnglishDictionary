@@ -25,15 +25,23 @@
             
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <SwipeView>
-                        <Grid Padding="10" ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                    <Grid ColumnDefinitions="*,Auto"
+                              VerticalOptions="Center"
+                              Padding="0,5">
+                        <Border Padding="15">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
                             <StackLayout>
-                                <Label Text="{Binding Word}" FontAttributes="Bold" FontSize="18"  />
-                                <Label Text="{Binding Translation}" FontSize="14" TextColor="Gray"/>
+                                <Label Text="{Binding Word}"
+                                           FontAttributes="Bold"
+                                           FontSize="18"/>
+                                <Label Text="{Binding Translation}"
+                                           FontSize="14"
+                                           TextColor="Gray"/>
                             </StackLayout>
-                        </Grid>
-
-                    </SwipeView>
+                        </Border>
+                    </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

@@ -3,35 +3,31 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="EngishMotherFucker.AddWordPage"
-    Title="Добавить слово"
-    BackgroundColor="Black"
-    NavigationPage.HasNavigationBar="True">
+    NavigationPage.HasNavigationBar="False">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
 
-            <Label Text="Английское слово" TextColor="White"/>
-            <Entry x:Name="WordEntry" Placeholder="Введите слово" BackgroundColor="#222" TextColor="White"/>
+            <Label Text="Английское слово"/>
+            <Entry x:Name="WordEntry" Placeholder="Введите слово"/>
 
-            <Label Text="Перевод" TextColor="White"/>
-            <Entry x:Name="TranslationEntry" Placeholder="Введите перевод" BackgroundColor="#222" TextColor="White"/>
+            <Label Text="Перевод"/>
+            <Entry x:Name="TranslationEntry" Placeholder="Введите перевод"/>
 
-            <Label Text="Транскрипция" TextColor="White"/>
-            <Entry x:Name="TranscriptionEntry" Placeholder="Например, [æpl]" BackgroundColor="#222" TextColor="White"/>
+            <Label Text="Транскрипция"/>
+            <Entry x:Name="TranscriptionEntry" Placeholder="Например, [æpl]"/>
 
-            <Label Text="Определение (англ.)" TextColor="White"/>
-            <Entry x:Name="DefinitionEnEntry" Placeholder="Описание на английском" BackgroundColor="#222" TextColor="White"/>
+            <Label Text="Определение (англ.)"/>
+            <Entry x:Name="DefinitionEnEntry" Placeholder="Описание на английском"/>
 
-            <Label Text="Определение (рус.)" TextColor="White"/>
-            <Entry x:Name="DefinitionRuEntry" Placeholder="Описание на русском" BackgroundColor="#222" TextColor="White"/>
+            <Label Text="Определение (рус.)"/>
+            <Entry x:Name="DefinitionRuEntry" Placeholder="Описание на русском"/>
 
-            <Label Text="Тема" TextColor="White"/>
-            <Entry x:Name="TopicEntry" Placeholder="Категория или тема" BackgroundColor="#222" TextColor="White"/>
+            <Label Text="Тема"/>
+            <Entry x:Name="TopicEntry" Placeholder="Категория или тема"/>
 
-            <Button Text="Сохранить" 
-                    Clicked="OnSaveClicked"
-                    BackgroundColor="#6200EE"
-                    TextColor="White"/>
+            <Button Text="Сохранить"
+                    Clicked="OnSaveClicked"/>
         </VerticalStackLayout>
     </ScrollView>
 
