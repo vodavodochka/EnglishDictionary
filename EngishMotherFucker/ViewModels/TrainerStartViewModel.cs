@@ -4,6 +4,10 @@ namespace EngishMotherFucker.ViewModels
 {
     public class TrainerStartViewModel : BaseViewModel
     {
+        public int QuestionCount => Preferences.Get("QuestionCount", 10);
+
+        public string SelectedPrinciple => Preferences.Get("SelectedPrinciple", "Перевод EN > RU");
+
         public ICommand StartTrainerCommand { get; }
 
         public TrainerStartViewModel()

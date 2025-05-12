@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EngishMotherFucker.Pages.SettingsPage"
+             Title="SettingsPage"
+             NavigationPage.HasNavigationBar="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Импорт / Экспорт -->
+            <VerticalStackLayout Spacing="10">
+                <Label Text="База данных:" FontAttributes="Bold" FontSize="18"/>
+                <Button Text="📤 Экспортировать базу" Command="{Binding ExportCommand}"/>
+                <Button Text="📥 Импортировать базу" Command="{Binding ImportCommand}"/>
+            </VerticalStackLayout>
+
+            <!-- Настройки тренажера -->
+            <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*" RowSpacing="10">
+                <Label Text="Настройки тренажёра:" FontAttributes="Bold" FontSize="18"/>
+                <Label Grid.Row="1"
+                       Text="{Binding QuestionCount, StringFormat='Количество вопросов: {0}'}"/>
+                <Slider Grid.Row="1"
+                        Grid.Column="1" 
+                        Minimum="5" 
+                        Maximum="15" 
+                        Value="{Binding QuestionCount}"/>
+
+                <Label Grid.Row="2" 
+                       Text="Принцип формирования вопросов:"/>
+                <Picker Grid.Row="2" 
+                        Grid.Column="1" 
+                        ItemsSource="{Binding AvailablePrinciples}" 
+                        SelectedItem="{Binding SelectedPrinciple}" />
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

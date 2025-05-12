@@ -111,7 +111,7 @@ namespace EngishMotherFucker.ViewModels
 
         private void OnOpenSettings()
         {
-            // TODO: Открытие настроек
+            RequestOpenSettings?.Invoke();
         }
     }
 }

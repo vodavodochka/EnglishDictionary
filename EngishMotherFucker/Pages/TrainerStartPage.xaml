@@ -14,6 +14,8 @@
 
         <!-- Краткое описание -->
         <Label Text="Тут будет краткое описание..."/>
+        <Label Text="{Binding QuestionCount, StringFormat='- Количество вопросов: {0}'}"/>
+        <Label Text="{Binding SelectedPrinciple, StringFormat='- Принцип: {0}'}"/>
 
         <!-- Кнопка для начала тренировки -->
         <Button Text="Начать тренировку"

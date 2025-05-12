@@ -4,6 +4,7 @@ using static Android.Provider.UserDictionary;
 #endif
 
 using EngishMotherFucker.Models;
+using EngishMotherFucker.Pages;
 using EngishMotherFucker.ViewModels;
 
 namespace EngishMotherFucker
@@ -16,6 +17,7 @@ namespace EngishMotherFucker
             InitializeComponent();
             ViewModel.RequestAddWordPage += OnRequestAddWordPage;
             ViewModel.RequestStartTrainer += OnStartTrainer;
+            ViewModel.RequestOpenSettings += OnOpenSettings;
 #if ANDROID
             var window = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Window;
             if (window != null)
@@ -33,6 +35,11 @@ namespace EngishMotherFucker
         private async void OnStartTrainer()
         {
             await Navigation.PushAsync(new TrainerStartPage());
+        }
+
+        private async void OnOpenSettings()
+        {
+            await Navigation.PushAsync(new SettingsPage());
         }
 
         private async void OnWordSelected(object sender, SelectionChangedEventArgs e)

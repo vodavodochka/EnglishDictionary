@@ -31,7 +31,7 @@ namespace EngishMotherFucker.ViewModels
 
         public TrainerQuestionViewModel()
         {
-            LoadQuestions(); // Заглушка
+            LoadQuestions();
             LoadNextQuestion();
         }
 
@@ -41,7 +41,8 @@ namespace EngishMotherFucker.ViewModels
             [
                 new("Translate: Apple", ["Яблоко", "Апельсин", "Банан", "Груша"], "Яблоко"),
                 new("Translate: Dog", ["Кошка", "Собака", "Лошадь", "Мышь"], "Собака"),
-                // Здесь будете генерить и грузить вопросы
+                // Здесь будете генерить и грузить вопросы из бд / оттуда, откуда будет удобнее
+                // Пока что тестируйте с заглушками
             ];
         }
 
