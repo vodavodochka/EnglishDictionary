@@ -68,19 +68,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="AddWordPage.xaml">
+	  <MauiXaml Update="Pages\AddWordPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="EditWordPage.xaml">
+	  <MauiXaml Update="Pages\EditWordPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="TrainerQuestionPage.xaml">
+	  <MauiXaml Update="Pages\TrainerQuestionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="TrainerResultPage.xaml">
+	  <MauiXaml Update="Pages\TrainerResultPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="TrainerStartPage.xaml">
+	  <MauiXaml Update="Pages\TrainerStartPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

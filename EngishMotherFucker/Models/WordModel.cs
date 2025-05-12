@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EngishMotherFucker
+﻿namespace EngishMotherFucker.Models
 {
-    public class WordModel : BaseViewModel
+    public class WordModel
     {
         public string Word { get; set; } // Слово на английском
         public string Translation { get; set; } // Перевод на русский

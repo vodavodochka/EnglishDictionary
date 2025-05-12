@@ -5,8 +5,17 @@
              Title="TrainerResultPage"
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False">
-    <VerticalStackLayout Padding="20" Spacing="30">
-        <Label Text="{Binding ResultText}" FontSize="24" HorizontalOptions="Center"/>
-        <Button Text="Завершить" Command="{Binding GoBackCommand}" />
+    <VerticalStackLayout Padding="20"
+            Spacing="30">
+
+        <!-- Отображение результата -->
+        <Label Text="{Binding ResultText}"
+                FontSize="24"
+                HorizontalOptions="Center"/>
+
+        <!-- Кнопка для завершения -->
+        <Button Text="Завершить"
+                Command="{Binding GoBackCommand}"/>
+
     </VerticalStackLayout>
 </ContentPage>

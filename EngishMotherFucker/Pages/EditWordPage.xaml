@@ -3,33 +3,34 @@
              x:Class="EngishMotherFucker.EditWordPage"
              NavigationPage.HasNavigationBar="False">
     <ScrollView>
+        <!-- Поля для редактирования слова -->
         <VerticalStackLayout Padding="20"
-                Spacing="15">
+                             Spacing="15">
 
             <Label Text="Английское слово"/>
             <Entry Text="{Binding Word.Word}"
-                    Placeholder="Слово"
-                    IsReadOnly="True"/>
+                   Placeholder="Слово"
+                   IsReadOnly="True"/>
 
             <Label Text="Перевод"/>
             <Entry Text="{Binding Word.Translation}"
-                    Placeholder="Перевод"/>
+                   Placeholder="Перевод"/>
 
             <Label Text="Транскрипция"/>
             <Entry Text="{Binding Word.Transcription}"
-                    Placeholder="Транскрипция"/>
+                   Placeholder="Транскрипция"/>
 
             <Label Text="Определение (англ.)"/>
             <Entry Text="{Binding Word.DefinitionRu}"
-                    Placeholder="Определение (рус)"/>
+                   Placeholder="Определение (рус)"/>
 
             <Label Text="Определение (рус.)"/>
             <Entry Text="{Binding Word.DefinitionEn}"
-                    Placeholder="Определение (англ)"/>
+                   Placeholder="Определение (англ)"/>
 
             <Label Text="Тема"/>
             <Entry Text="{Binding Word.Topic}"
-                    Placeholder="Тема"/>
+                   Placeholder="Тема"/>
 
             <!-- Кнопки -->
             <Button Text="Сохранить"

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EngishMotherFucker.TrainerStartPage"
+             Title="TrainerStartPage"
+             NavigationPage.HasNavigationBar="False">
+    <VerticalStackLayout Padding="20"
+            Spacing="30">
+
+        <!-- Привественный текст -->
+        <Label Text="Добро пожаловать в тренажёр!"
+                FontSize="24"
+                HorizontalOptions="Center"/>
+
+        <!-- Краткое описание -->
+        <Label Text="Тут будет краткое описание..."/>
+
+        <!-- Кнопка для начала тренировки -->
+        <Button Text="Начать тренировку"
+                Command="{Binding StartTrainerCommand}"/>
+
+    </VerticalStackLayout>
+</ContentPage>

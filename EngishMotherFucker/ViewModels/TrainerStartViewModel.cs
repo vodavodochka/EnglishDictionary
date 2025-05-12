@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
-namespace EngishMotherFucker
+namespace EngishMotherFucker.ViewModels
 {
     public class TrainerStartViewModel : BaseViewModel
     {

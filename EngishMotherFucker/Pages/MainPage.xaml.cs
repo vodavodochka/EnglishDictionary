@@ -3,6 +3,9 @@ using Android.Views;
 using static Android.Provider.UserDictionary;
 #endif
 
+using EngishMotherFucker.Models;
+using EngishMotherFucker.ViewModels;
+
 namespace EngishMotherFucker
 {
     public partial class MainPage : ContentPage

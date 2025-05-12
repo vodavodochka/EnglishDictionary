@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="EngishMotherFucker.AddWordPage"
+    NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <!-- Поля для ввода данных -->
+        <VerticalStackLayout Padding="20"
+                             Spacing="15">
+
+            <Label Text="Английское слово"/>
+            <Entry x:Name="WordEntry"
+                   Placeholder="Введите слово"/>
+
+            <Label Text="Перевод"/>
+            <Entry x:Name="TranslationEntry"
+                   Placeholder="Введите перевод"/>
+
+            <Label Text="Транскрипция"/>
+            <Entry x:Name="TranscriptionEntry"
+                   Placeholder="Например, [æpl]"/>
+
+            <Label Text="Определение (англ.)"/>
+            <Entry x:Name="DefinitionEnEntry"
+                   Placeholder="Описание на английском"/>
+
+            <Label Text="Определение (рус.)"/>
+            <Entry x:Name="DefinitionRuEntry"
+                   Placeholder="Описание на русском"/>
+
+            <Label Text="Тема"/>
+            <Entry x:Name="TopicEntry"
+                   Placeholder="Категория или тема"/>
+
+            <!-- Кнопка для сохранения данных -->
+            <Button Text="Сохранить"
+                    Clicked="OnSaveClicked"/>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

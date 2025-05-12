@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
+using EngishMotherFucker.Models;
 
-namespace EngishMotherFucker
+namespace EngishMotherFucker.ViewModels
 {
     public class EditWordPageViewModel : BaseViewModel
     {

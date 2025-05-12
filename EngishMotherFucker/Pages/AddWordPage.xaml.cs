@@ -1,9 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EngishMotherFucker.Models;
+using EngishMotherFucker.Utils;
 
 namespace EngishMotherFucker
 {
@@ -11,7 +8,7 @@ namespace EngishMotherFucker
     {
         public AddWordPage()
         {
-            InitializeComponent();   
+            InitializeComponent();
         }
 
         private async void OnSaveClicked(object sender, EventArgs e)

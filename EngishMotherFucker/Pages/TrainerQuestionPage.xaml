@@ -5,24 +5,29 @@
              Title="TrainerQuestionPage"
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False">
-    <VerticalStackLayout Padding="20" Spacing="10">
+    <VerticalStackLayout Padding="20"
+            Spacing="10">
+
+        <!-- Вопрос -->
         <Border Padding="25">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="10"/>
             </Border.StrokeShape>
             <Label Text="{Binding CurrentQuestionText}"
-                   FontSize="24" 
-                   HorizontalOptions="Center" />
+                   FontSize="24"
+                   HorizontalOptions="Center"/>
         </Border>
 
+        <!-- Варианты ответов -->
         <CollectionView ItemsSource="{Binding CurrentOptions}"
                         SelectionMode="Single"
                         SelectionChanged="OnOptionSelected"
                         IsEnabled="{Binding AreOptionsEnabled}">
             <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" Span="2"
-                         VerticalItemSpacing="5"
-                         HorizontalItemSpacing="5" />
+                <GridItemsLayout Orientation="Vertical"
+                        Span="2"
+                                 VerticalItemSpacing="5"
+                                 HorizontalItemSpacing="5"/>
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
@@ -31,14 +36,15 @@
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10"/>
                         </Border.StrokeShape>
-                        <Label Text="{Binding}" 
-                               FontSize="16" 
+                        <Label Text="{Binding}"
+                               FontSize="16"
                                HorizontalOptions="Center"/>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
+        <!-- Текст результата -->
         <Label x:Name="ResultLabel"
                Text="{Binding FeedbackText}"
                FontAttributes="Bold"
