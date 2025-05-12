@@ -5,40 +5,46 @@
              x:Class="EngishMotherFucker.MainPage"
              x:Name="MainPageRef"
              NavigationPage.HasNavigationBar="False">
-	<ContentPage.BindingContext>
-		<local:MainPageViewModel/>
-	</ContentPage.BindingContext>
-    <Grid RowDefinitions="Auto, *" Padding="10">
+    <ContentPage.BindingContext>
+        <local:MainPageViewModel/>
+    </ContentPage.BindingContext>
+    <Grid RowDefinitions="Auto, *"
+            Padding="10">
 
         <!-- Кнопки -->
-        <HorizontalStackLayout Spacing="10" Grid.Row="0" Margin="0,0,0,10" >
-            <Button Text="Добавить слово" Command="{Binding AddWordCommand}" />
-            <Button Text="Тренажёр" Command="{Binding StartTrainerCommand}" />
-            <Button Text="⚙" Command="{Binding OpenSettingsCommand}" />
+        <HorizontalStackLayout Spacing="10"
+                Grid.Row="0"
+                Margin="0,0,0,10">
+            <Button Text="Добавить слово"
+                    Command="{Binding AddWordCommand}"/>
+            <Button Text="Тренажёр"
+                    Command="{Binding StartTrainerCommand}"/>
+            <Button Text="⚙"
+                    Command="{Binding OpenSettingsCommand}"/>
         </HorizontalStackLayout>
 
         <!-- Слова -->
         <CollectionView ItemsSource="{Binding Words}"
-                Grid.Row="1"
-                SelectionMode="Single"
-                SelectionChanged="OnWordSelected">
-            
+                        Grid.Row="1"
+                        SelectionMode="Single"
+                        SelectionChanged="OnWordSelected">
+
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid ColumnDefinitions="*,Auto"
-                              VerticalOptions="Center"
-                              Padding="0,5">
+                          VerticalOptions="Center"
+                          Padding="0,5">
                         <Border Padding="15">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="10"/>
                             </Border.StrokeShape>
                             <StackLayout>
                                 <Label Text="{Binding Word}"
-                                           FontAttributes="Bold"
-                                           FontSize="18"/>
+                                       FontAttributes="Bold"
+                                       FontSize="18"/>
                                 <Label Text="{Binding Translation}"
-                                           FontSize="14"
-                                           TextColor="Gray"/>
+                                       FontSize="14"
+                                       TextColor="Gray"/>
                             </StackLayout>
                         </Border>
                     </Grid>

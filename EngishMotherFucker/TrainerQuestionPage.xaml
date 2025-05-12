@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EngishMotherFucker.TrainerQuestionPage"
+             Title="TrainerQuestionPage"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False">
+    <VerticalStackLayout Padding="20" Spacing="10">
+        <Border Padding="25">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10"/>
+            </Border.StrokeShape>
+            <Label Text="{Binding CurrentQuestionText}"
+                   FontSize="24" 
+                   HorizontalOptions="Center" />
+        </Border>
+
+        <CollectionView ItemsSource="{Binding CurrentOptions}"
+                        SelectionMode="Single"
+                        SelectionChanged="OnOptionSelected"
+                        IsEnabled="{Binding AreOptionsEnabled}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2"
+                         VerticalItemSpacing="5"
+                         HorizontalItemSpacing="5" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="30">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+                        <Label Text="{Binding}" 
+                               FontSize="16" 
+                               HorizontalOptions="Center"/>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label x:Name="ResultLabel"
+               Text="{Binding FeedbackText}"
+               FontAttributes="Bold"
+               FontSize="20"
+               HorizontalOptions="Center"/>
+    </VerticalStackLayout>
+
+</ContentPage>

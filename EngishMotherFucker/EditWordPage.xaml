@@ -2,29 +2,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EngishMotherFucker.EditWordPage"
              NavigationPage.HasNavigationBar="False">
-    <ContentPage.Content>
-        <StackLayout Padding="20" Spacing="15">
-            
+    <ScrollView>
+        <VerticalStackLayout Padding="20"
+                Spacing="15">
+
             <Label Text="Английское слово"/>
-            <Entry Text="{Binding Word.Word}" Placeholder="Слово" IsReadOnly="True" />
+            <Entry Text="{Binding Word.Word}"
+                    Placeholder="Слово"
+                    IsReadOnly="True"/>
 
             <Label Text="Перевод"/>
-            <Entry Text="{Binding Word.Translation}" Placeholder="Перевод" />
+            <Entry Text="{Binding Word.Translation}"
+                    Placeholder="Перевод"/>
 
             <Label Text="Транскрипция"/>
-            <Entry Text="{Binding Word.Transcription}" Placeholder="Транскрипция" />
+            <Entry Text="{Binding Word.Transcription}"
+                    Placeholder="Транскрипция"/>
 
             <Label Text="Определение (англ.)"/>
-            <Entry Text="{Binding Word.DefinitionRu}" Placeholder="Определение (рус)" />
+            <Entry Text="{Binding Word.DefinitionRu}"
+                    Placeholder="Определение (рус)"/>
 
             <Label Text="Определение (рус.)"/>
-            <Entry Text="{Binding Word.DefinitionEn}" Placeholder="Определение (англ)" />
+            <Entry Text="{Binding Word.DefinitionEn}"
+                    Placeholder="Определение (англ)"/>
 
             <Label Text="Тема"/>
-            <Entry Text="{Binding Word.Topic}" Placeholder="Тема" />
-            
-            <Button Text="Сохранить" Command="{Binding SaveCommand}" Margin="0,10,0,10"/>
-		    <Button Text="Удалить" Command="{Binding DeleteCommand}" BackgroundColor="Red"/>
-        </StackLayout>
-    </ContentPage.Content>
+            <Entry Text="{Binding Word.Topic}"
+                    Placeholder="Тема"/>
+
+            <!-- Кнопки -->
+            <Button Text="Сохранить"
+                    Command="{Binding SaveCommand}"/>
+            <Button Text="Удалить"
+                    Command="{Binding DeleteCommand}"
+                    BackgroundColor="Red"/>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

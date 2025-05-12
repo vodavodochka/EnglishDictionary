@@ -53,7 +53,7 @@ namespace EngishMotherFucker
 
         private void OnStartTrainer()
         {
-            // TODO: Запуск тренажёра
+            RequestStartTrainer?.Invoke();
         }
 
         private void OnOpenSettings()
