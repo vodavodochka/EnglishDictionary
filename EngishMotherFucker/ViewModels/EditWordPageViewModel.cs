@@ -36,6 +36,7 @@ namespace EngishMotherFucker.ViewModels
                 _mainPageViewModel.Words[index] = Word;
             }
 
+            _mainPageViewModel.ApplyFilter();
             Application.Current.MainPage.Navigation.PopAsync();
         }
 
@@ -47,6 +48,8 @@ namespace EngishMotherFucker.ViewModels
             {
                 _mainPageViewModel.Words.RemoveAt(index);
             }
+
+            _mainPageViewModel.ApplyFilter();
             Application.Current.MainPage.Navigation.PopAsync();
         }
     }

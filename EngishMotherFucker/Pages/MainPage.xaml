@@ -9,26 +9,36 @@
     <ContentPage.BindingContext>
         <viewModels:MainPageViewModel/>
     </ContentPage.BindingContext>
-    <Grid RowDefinitions="Auto, *"
+    <Grid RowDefinitions="Auto, Auto, *"
           Padding="10">
 
-        <!-- Кнопки -->
-        <HorizontalStackLayout Spacing="10"
-                               Grid.Row="0"
-                               Margin="0,0,0,10">
-            <Button Text="Добавить слово"
-                    Command="{Binding AddWordCommand}"/>
-            <Button Text="Тренажёр"
-                    Command="{Binding StartTrainerCommand}"/>
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Padding="0,5">
+            <SearchBar Placeholder="Поиск"
+                   Text="{Binding SearchText}"
+                   TextChanged="OnSearchTextChanged"/>
             <Button Text="⚙"
-                    Command="{Binding OpenSettingsCommand}"/>
-        </HorizontalStackLayout>
+                Command="{Binding OpenSettingsCommand}"
+                Grid.Column="1"
+                Margin="10,0,0,0"/>
+        </Grid>
+
+        <!-- Кнопки -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" Padding="0,5" ColumnSpacing="10">
+            <Button Text="Добавить слово" Command="{Binding AddWordCommand}"/>
+            <Button Grid.Column="1" Text="Тренажёр" Command="{Binding StartTrainerCommand}"/>
+        </Grid>
 
         <!-- Слова -->
-        <CollectionView ItemsSource="{Binding Words}"
-                        Grid.Row="1"
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding FilteredWords}"
                         SelectionMode="Single"
                         SelectionChanged="OnWordSelected">
+
+            <CollectionView.EmptyView>
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="{Binding EmptyMessage}" FontSize="16" Margin="20" HorizontalTextAlignment="Center"/>
+                </StackLayout>
+            </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>

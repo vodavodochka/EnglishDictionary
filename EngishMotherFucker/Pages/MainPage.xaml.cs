@@ -45,5 +45,11 @@ namespace EngishMotherFucker
 
             ((CollectionView)sender).SelectedItem = null;
         }
+
+        private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Всё обрабатывается в ViewModel-и
+        }
+
     }
 }
