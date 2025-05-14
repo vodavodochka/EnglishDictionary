@@ -22,6 +22,10 @@
             <Entry x:Name="TranscriptionEntry"
                    Placeholder="Например, [æpl]"/>
 
+            <Label Text="Часть речи"/>
+            <Entry x:Name="PartOfSpeechEntry"
+                   Placeholder="Например, существительное"/>
+
             <Label Text="Определение (англ.)"/>
             <Entry x:Name="DefinitionEnEntry"
                    Placeholder="Описание на английском"/>
@@ -30,7 +34,13 @@
             <Entry x:Name="DefinitionRuEntry"
                    Placeholder="Описание на русском"/>
 
-            <Label Text="Тема"/>
+            <Label Text="Примеры использования"/>
+                     <Editor x:Name="ExamplesEntry"
+                                   Placeholder="Примеры"
+                                   AutoSize="TextChanges"
+                                   HeightRequest="150"/>
+
+                     <Label Text="Тема"/>
             <Entry x:Name="TopicEntry"
                    Placeholder="Категория или тема"/>
 

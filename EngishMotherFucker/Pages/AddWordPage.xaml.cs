@@ -24,8 +24,10 @@ namespace EngishMotherFucker
                 Word = WordEntry.Text.Trim(),
                 Translation = TranslationEntry.Text?.Trim(),
                 Transcription = TranscriptionEntry.Text?.Trim(),
+                PartOfSpeech = PartOfSpeechEntry.Text?.Trim(),
                 DefinitionEn = DefinitionEnEntry.Text?.Trim(),
                 DefinitionRu = DefinitionRuEntry.Text?.Trim(),
+                Examples = ExamplesEntry.Text?.Trim(),
                 Topic = TopicEntry.Text?.Trim()
             };
 

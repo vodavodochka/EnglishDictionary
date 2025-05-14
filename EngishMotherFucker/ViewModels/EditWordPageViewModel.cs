@@ -28,6 +28,10 @@ namespace EngishMotherFucker.ViewModels
 
         private void OnSave()
         {
+            // Тут какой-то баг, связанный с первым словом.
+            // Если его как либо изменить, то отображение не обновится
+            // пока мы не изменим другое слово
+
             var index = _mainPageViewModel.Words.IndexOf(
                 _mainPageViewModel.Words.FirstOrDefault(w => w.Word == Word.Word));
 

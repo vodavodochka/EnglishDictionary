@@ -14,23 +14,33 @@
 
             <Label Text="Перевод"/>
             <Entry Text="{Binding Word.Translation}"
-                   Placeholder="Перевод"/>
+                   Placeholder="Введите перевод"/>
 
             <Label Text="Транскрипция"/>
             <Entry Text="{Binding Word.Transcription}"
-                   Placeholder="Транскрипция"/>
+                   Placeholder="Например, [æpl]"/>
+
+            <Label Text="Часть речи"/>
+            <Entry Text="{Binding Word.PartOfSpeech}"
+                   Placeholder="Например, существительное"/>
 
             <Label Text="Определение (англ.)"/>
             <Entry Text="{Binding Word.DefinitionRu}"
-                   Placeholder="Определение (рус)"/>
+                   Placeholder="Описание на английском"/>
 
             <Label Text="Определение (рус.)"/>
             <Entry Text="{Binding Word.DefinitionEn}"
-                   Placeholder="Определение (англ)"/>
+                   Placeholder="Описание на русском"/>
 
-            <Label Text="Тема"/>
+            <Label Text="Примеры использования"/>
+                     <Editor Text="{Binding Word.Examples}"
+                                   Placeholder="Примеры"
+                                   AutoSize="TextChanges"
+                                   HeightRequest="150"/>
+
+                     <Label Text="Тема"/>
             <Entry Text="{Binding Word.Topic}"
-                   Placeholder="Тема"/>
+                   Placeholder="Категория или тема"/>
 
             <!-- Кнопки -->
             <Button Text="Сохранить"

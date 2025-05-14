@@ -14,12 +14,46 @@ namespace EngishMotherFucker.ViewModels
         public event Action RequestOpenSettings;
         public event Action RequestDeleteWord;
 
-        public ObservableCollection<WordModel> Words { get; } = new();
-        public ObservableCollection<WordModel> FilteredWords { get; } = new();
+        public ObservableCollection<WordModel> Words { get; } = [];
+        public ObservableCollection<WordModel> FilteredWords { get; } = [];
+
+        public List<SearchCriterionOption> SearchCriterionOptions { get; } =
+        [
+            new() { Criterion = SearchCriterion.Word, DisplayName = "Слово" },
+            new() { Criterion = SearchCriterion.Translation, DisplayName = "Перевод" },
+            new() { Criterion = SearchCriterion.PartOfSpeech, DisplayName = "Часть речи" },
+            new() { Criterion = SearchCriterion.Topic, DisplayName = "Тема" }
+        ];
 
         public ICommand AddWordCommand { get; }
         public ICommand StartTrainerCommand { get; }
         public ICommand OpenSettingsCommand { get; }
+        public ICommand SetCriterionCommand { get; }
+
+        private SearchCriterion _selectedCriterion = SearchCriterion.Word;
+        public SearchCriterion SelectedCriterion
+        {
+            get => _selectedCriterion;
+            set
+            {
+                if (SetProperty(ref _selectedCriterion, value))
+                    ApplyFilter();
+            }
+        }
+
+        private SearchCriterionOption _selectedOption;
+        public SearchCriterionOption SelectedOption
+        {
+            get => _selectedOption;
+            set
+            {
+                if (SetProperty(ref _selectedOption, value))
+                {
+                    SelectedCriterion = value.Criterion;
+                    ApplyFilter();
+                }
+            }
+        }
 
         private string searchText;
         public string SearchText
@@ -47,10 +81,15 @@ namespace EngishMotherFucker.ViewModels
             AddWordCommand = new Command(OnAddWord);
             StartTrainerCommand = new Command(OnStartTrainer);
             OpenSettingsCommand = new Command(OnOpenSettings);
+            SetCriterionCommand = new Command<string>(OnSetCriterion);
+
+            SelectedOption = SearchCriterionOptions.First();
 
             // Пример
-            Words.Add(new WordModel { Word = "Apple", Translation = "Яблоко" });
-            Words.Add(new WordModel { Word = "Run", Translation = "Бежать" });
+            Words.Add(new WordModel { Word = "Computer", Translation = "Компьютер", PartOfSpeech="Существительное", Topic="Технологии" });
+            Words.Add(new WordModel { Word = "Run", Translation = "Бежать", PartOfSpeech="Глагол", Topic="Действия" });
+            Words.Add(new WordModel { Word = "Motherboard", Translation = "Материнская плата", PartOfSpeech="Существительное", Topic="Технологии" });
+            Words.Add(new WordModel { Word = "Sleep", Translation = "Спать", PartOfSpeech="Глагол", Topic="Действия" });
 
             //for (int i = 0; i < 100; i++)
             //{
@@ -71,10 +110,24 @@ namespace EngishMotherFucker.ViewModels
             FilteredWords.Clear();
 
             var lower = SearchText?.ToLower() ?? "";
+            var criterion = SelectedOption?.Criterion.ToString() ?? "Word";
 
-            var matchedWords = Words.Where(w =>
-                w.Word.ToLower().Contains(lower) ||
-                w.Translation.ToLower().Contains(lower)).ToList();
+            IEnumerable<WordModel> matchedWords = Words;
+
+            if (!string.IsNullOrWhiteSpace(lower))
+            {
+                matchedWords = Words.Where(w =>
+                {
+                    return criterion switch
+                    {
+                        "Word" => (w.Word ?? "").ToLower().Contains(lower),
+                        "Translation" => (w.Translation ?? "").ToLower().Contains(lower),
+                        "PartOfSpeech" => (w.PartOfSpeech ?? "").ToLower().Contains(lower),
+                        "Topic" => (w.Topic ?? "").ToLower().Contains(lower),
+                        _ => false
+                    };
+                });
+            }
 
             foreach (var word in matchedWords)
                 FilteredWords.Add(word);
@@ -83,7 +136,7 @@ namespace EngishMotherFucker.ViewModels
             {
                 EmptyMessage = "Нет слов. Добавьте первое слово!";
             }
-            else if (matchedWords.Count == 0)
+            else if (FilteredWords.Count == 0)
             {
                 EmptyMessage = "Ничего не найдено по запросу.";
             }
@@ -92,6 +145,8 @@ namespace EngishMotherFucker.ViewModels
                 EmptyMessage = string.Empty;
             }
         }
+
+
 
         public void AddWord(WordModel word)
         {
@@ -112,6 +167,16 @@ namespace EngishMotherFucker.ViewModels
         private void OnOpenSettings()
         {
             RequestOpenSettings?.Invoke();
+        }
+
+        private void OnSetCriterion(string parameter)
+        {
+            if (Enum.TryParse(parameter, out SearchCriterion parsed))
+            {
+                var option = SearchCriterionOptions.FirstOrDefault(o => o.Criterion == parsed);
+                if (option != null)
+                    SelectedOption = option;
+            }
         }
     }
 }

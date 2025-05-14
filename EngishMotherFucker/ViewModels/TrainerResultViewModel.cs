@@ -7,7 +7,7 @@ namespace EngishMotherFucker.ViewModels
         public int CorrectAnswers { get; }
         public int TotalQuestions { get; }
 
-        public string ResultText => $"Вы ответили правильно на {CorrectAnswers} из {TotalQuestions}";
+        public string ResultText => $"Вы ответили правильно на {CorrectAnswers} из {TotalQuestions} вопросов";
 
         public ICommand GoBackCommand => new Command(async () =>
         {
