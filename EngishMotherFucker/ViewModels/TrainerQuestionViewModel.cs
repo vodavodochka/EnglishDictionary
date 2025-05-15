@@ -37,14 +37,78 @@ namespace EngishMotherFucker.ViewModels
 
         private void LoadQuestions()
         {
-            Questions =
-            [
-                new("Translate: Apple", ["Яблоко", "Апельсин", "Банан", "Груша"], "Яблоко"),
-                new("Translate: Dog", ["Кошка", "Собака", "Лошадь", "Мышь"], "Собака"),
-                // Здесь будете генерить и грузить вопросы из бд / оттуда, откуда будет удобнее
-                // Пока что тестируйте с заглушками
-            ];
+            var selectedPrinciple = Preferences.Get("SelectedPrinciple", "Перевод EN > RU");
+            var questionCount = Preferences.Get("QuestionCount", 10);
+
+            var baseWords = MainPageViewModel.Instance?.Words?.ToList() ?? [];
+            var rng = new Random();
+
+            var shuffled = baseWords.OrderBy(_ => rng.Next()).Take(questionCount).ToList();
+
+            List<QuestionModel> generatedQuestions = new();
+
+            foreach (var word in shuffled)
+            {
+                List<string> options;
+                string questionText = "";
+                string correctAnswer = "";
+
+                // Подбор случайных неправильных вариантов
+                List<string> GetDistractors(Func<WordModel, string> selector)
+                {
+                    return baseWords
+                        .Where(w => selector(w) != selector(word))
+                        .Select(selector)
+                        .Distinct()
+                        .OrderBy(_ => rng.Next())
+                        .Take(3)
+                        .ToList();
+                }
+
+                switch (selectedPrinciple)
+                {
+                    case "Перевод EN > RU":
+                        correctAnswer = word.Translation;
+                        options = GetDistractors(w => w.Translation);
+                        options.Add(correctAnswer);
+                        options = options.OrderBy(_ => rng.Next()).ToList();
+                        questionText = $"Переведи слово: {word.Word}";
+                        break;
+
+                    case "Перевод RU > EN":
+                        correctAnswer = word.Word;
+                        options = GetDistractors(w => w.Word);
+                        options.Add(correctAnswer);
+                        options = options.OrderBy(_ => rng.Next()).ToList();
+                        questionText = $"Переведи слово: {word.Translation}";
+                        break;
+
+                    case "Определение RU":
+                        correctAnswer = word.Translation;
+                        options = GetDistractors(w => w.Translation);
+                        options.Add(correctAnswer);
+                        options = options.OrderBy(_ => rng.Next()).ToList();
+                        questionText = $"Что означает: {word.DefinitionRu}";
+                        break;
+
+                    case "Определение EN":
+                        correctAnswer = word.Word;
+                        options = GetDistractors(w => w.Word);
+                        options.Add(correctAnswer);
+                        options = options.OrderBy(_ => rng.Next()).ToList();
+                        questionText = $"What does it mean: {word.DefinitionEn}";
+                        break;
+
+                    default:
+                        continue;
+                }
+
+                generatedQuestions.Add(new QuestionModel(questionText, options.ToArray(), correctAnswer));
+            }
+
+            Questions = generatedQuestions;
         }
+
 
         private async void LoadNextQuestion()
         {

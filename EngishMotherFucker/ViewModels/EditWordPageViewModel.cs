@@ -41,6 +41,7 @@ namespace EngishMotherFucker.ViewModels
             }
 
             _mainPageViewModel.ApplyFilter();
+            WordStorage.SaveWords(_mainPageViewModel.Words.ToList());
             Application.Current.MainPage.Navigation.PopAsync();
         }
 
@@ -54,6 +55,7 @@ namespace EngishMotherFucker.ViewModels
             }
 
             _mainPageViewModel.ApplyFilter();
+            WordStorage.SaveWords(_mainPageViewModel.Words.ToList());
             Application.Current.MainPage.Navigation.PopAsync();
         }
     }

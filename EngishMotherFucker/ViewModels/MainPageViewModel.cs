@@ -9,6 +9,8 @@ namespace EngishMotherFucker.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {
+        public static MainPageViewModel Instance { get; private set; }
+
         public event Action RequestAddWordPage;
         public event Action RequestStartTrainer;
         public event Action RequestOpenSettings;
@@ -78,6 +80,8 @@ namespace EngishMotherFucker.ViewModels
 
         public MainPageViewModel()
         {
+            Instance = this; // СИНГЛТОН ЭТО АНТИ-ПАТТЕРН
+
             AddWordCommand = new Command(OnAddWord);
             StartTrainerCommand = new Command(OnStartTrainer);
             OpenSettingsCommand = new Command(OnOpenSettings);
@@ -85,16 +89,69 @@ namespace EngishMotherFucker.ViewModels
 
             SelectedOption = SearchCriterionOptions.First();
 
-            // Пример
-            Words.Add(new WordModel { Word = "Computer", Translation = "Компьютер", PartOfSpeech="Существительное", Topic="Технологии" });
-            Words.Add(new WordModel { Word = "Run", Translation = "Бежать", PartOfSpeech="Глагол", Topic="Действия" });
-            Words.Add(new WordModel { Word = "Motherboard", Translation = "Материнская плата", PartOfSpeech="Существительное", Topic="Технологии" });
-            Words.Add(new WordModel { Word = "Sleep", Translation = "Спать", PartOfSpeech="Глагол", Topic="Действия" });
-
             //for (int i = 0; i < 100; i++)
             //{
             //    Words.Add(new WordModel { Word = "Run", DefinitionEn = "move fast" });
             //}
+
+            var saved = WordStorage.LoadWords();
+            if (saved is { Count: > 0 })
+            {
+                Words = new ObservableCollection<WordModel>(saved);
+            }
+            else
+            {
+                Words = new ObservableCollection<WordModel>
+                {
+                    new()
+                    {
+                        Word = "Algorithm",
+                        Translation = "Алгоритм",
+                        PartOfSpeech = "Существительное",
+                        Topic = "Программирование",
+                        DefinitionEn = "A step-by-step procedure used to solve a problem or perform a task.",
+                        DefinitionRu = "Пошаговая последовательность действий для решения задачи или выполнения операции."
+                    },
+                    new()
+                    {
+                        Word = "Variable",
+                        Translation = "Переменная",
+                        PartOfSpeech = "Существительное",
+                        Topic = "Программирование",
+                        DefinitionEn = "A storage location identified by a name used to hold data.",
+                        DefinitionRu = "Именованная область памяти, используемая для хранения данных."
+                    },
+                    new()
+                    {
+                        Word = "Bug",
+                        Translation = "Ошибка",
+                        PartOfSpeech = "Существительное",
+                        Topic = "Тестирование",
+                        DefinitionEn = "An error or flaw in software that causes it to produce incorrect or unexpected results.",
+                        DefinitionRu = "Ошибка или сбой в программе, вызывающий неправильную или неожиданную работу."
+                    },
+                    new()
+                    {
+                        Word = "Cloud",
+                        Translation = "Облако",
+                        PartOfSpeech = "Существительное",
+                        Topic = "Технологии",
+                        DefinitionEn = "A network of remote servers that store and manage data and applications over the internet.",
+                        DefinitionRu = "Сеть удалённых серверов для хранения и управления данными и приложениями через интернет."
+                    },
+                    new()
+                    {
+                        Word = "Loop",
+                        Translation = "Цикл",
+                        PartOfSpeech = "Существительное",
+                        Topic = "Программирование",
+                        DefinitionEn = "A sequence of instructions that repeats until a certain condition is met.",
+                        DefinitionRu = "Последовательность инструкций, которая повторяется до выполнения определённого условия."
+                    }
+                };
+
+                WordStorage.SaveWords(Words.ToList());
+            }
 
             ApplyFilter();
 
@@ -102,6 +159,7 @@ namespace EngishMotherFucker.ViewModels
             {
                 Words.Add(m.Value);
                 ApplyFilter();
+                WordStorage.SaveWords(Words.ToList());
             });
         }
 
