@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using EngishMotherFucker.Models;
+using EngishMotherFucker.Shared;
 using EngishMotherFucker.Utils;
 
 
@@ -14,6 +15,7 @@ namespace EngishMotherFucker.ViewModels
         public event Action RequestOpenSettings;
         public event Action RequestDeleteWord;
 
+        private readonly SqliteConnectionFactory _connectionFactory;
         public ObservableCollection<WordModel> Words { get; } = [];
         public ObservableCollection<WordModel> FilteredWords { get; } = [];
 

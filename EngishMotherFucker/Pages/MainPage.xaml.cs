@@ -6,11 +6,13 @@ using static Android.Provider.UserDictionary;
 using EngishMotherFucker.Models;
 using EngishMotherFucker.Pages;
 using EngishMotherFucker.ViewModels;
+using EngishMotherFucker.Shared;
 
 namespace EngishMotherFucker
 {
     public partial class MainPage : ContentPage
     {
+        private readonly SqliteConnectionFactory _connectionFactory;
         private MainPageViewModel ViewModel => BindingContext as MainPageViewModel;
         public MainPage()
         {

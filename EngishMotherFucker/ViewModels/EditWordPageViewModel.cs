@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using EngishMotherFucker.Models;
+using EngishMotherFucker.Shared;
 
 namespace EngishMotherFucker.ViewModels
 {
@@ -7,6 +8,7 @@ namespace EngishMotherFucker.ViewModels
     {
         private WordModel _word;
         private readonly MainPageViewModel _mainPageViewModel;
+        private readonly SqliteConnectionFactory _connectionFactory;
 
         public WordModel Word
         {
