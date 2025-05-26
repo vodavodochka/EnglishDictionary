@@ -22,41 +22,39 @@ namespace EngishMotherFucker.ViewModels
             Word = word;
             _mainPageViewModel = mainPageViewModel;
 
-            SaveCommand = new Command(OnSave);
-            DeleteCommand = new Command(OnDelete);
+            SaveCommand = new Command(async () => await OnSaveAsync());
+            DeleteCommand = new Command(async () => await OnDeleteAsync());
         }
 
-        private void OnSave()
+        private async Task OnSaveAsync()
         {
-            // Тут какой-то баг, связанный с первым словом.
-            // Если его как либо изменить, то отображение не обновится
-            // пока мы не изменим другое слово
-
-            var index = _mainPageViewModel.Words.IndexOf(
-                _mainPageViewModel.Words.FirstOrDefault(w => w.Word == Word.Word));
-
-            if (index >= 0)
+            var existing = _mainPageViewModel.Words.FirstOrDefault(w => w.Id == Word.Id);
+            if (existing != null)
             {
-                _mainPageViewModel.Words[index] = Word;
+                existing.Word = Word.Word;
+                existing.Translation = Word.Translation;
+                existing.PartOfSpeech = Word.PartOfSpeech;
+                existing.Topic = Word.Topic;
+                existing.DefinitionEn = Word.DefinitionEn;
+                existing.DefinitionRu = Word.DefinitionRu;
             }
 
+            await App.Database.SaveWordAsync(existing ?? Word);
             _mainPageViewModel.ApplyFilter();
-            WordStorage.SaveWords(_mainPageViewModel.Words.ToList());
-            Application.Current.MainPage.Navigation.PopAsync();
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
 
-        private void OnDelete()
+        private async Task OnDeleteAsync()
         {
-            var index = _mainPageViewModel.Words.IndexOf(
-                _mainPageViewModel.Words.FirstOrDefault(w => w.Word == Word.Word));
-            if (index >= 0)
+            var itemToRemove = _mainPageViewModel.Words.FirstOrDefault(w => w.Id == Word.Id);
+            if (itemToRemove != null)
             {
-                _mainPageViewModel.Words.RemoveAt(index);
+                _mainPageViewModel.Words.Remove(itemToRemove);
+                await App.Database.DeleteWordAsync(Word);
+                _mainPageViewModel.ApplyFilter();
             }
 
-            _mainPageViewModel.ApplyFilter();
-            WordStorage.SaveWords(_mainPageViewModel.Words.ToList());
-            Application.Current.MainPage.Navigation.PopAsync();
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

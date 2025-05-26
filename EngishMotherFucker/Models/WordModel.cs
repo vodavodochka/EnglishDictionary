@@ -1,7 +1,11 @@
-﻿namespace EngishMotherFucker.Models
+﻿using SQLite;
+
+namespace EngishMotherFucker.Models
 {
     public class WordModel
     {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
         public string Word { get; set; } // Слово на английском
         public string Translation { get; set; } // Перевод на русский
         public string Transcription { get; set; } // Транскрипция (необязательно)

@@ -4,19 +4,16 @@ using CommunityToolkit.Mvvm.Messaging;
 using EngishMotherFucker.Models;
 using EngishMotherFucker.Utils;
 
-
 namespace EngishMotherFucker.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {
-        public static MainPageViewModel Instance { get; private set; }
-
         public event Action RequestAddWordPage;
         public event Action RequestStartTrainer;
         public event Action RequestOpenSettings;
         public event Action RequestDeleteWord;
 
-        public ObservableCollection<WordModel> Words { get; } = [];
+        public ObservableCollection<WordModel> Words { get; private set; } = [];
         public ObservableCollection<WordModel> FilteredWords { get; } = [];
 
         public List<SearchCriterionOption> SearchCriterionOptions { get; } =
@@ -77,11 +74,8 @@ namespace EngishMotherFucker.ViewModels
             set => SetProperty(ref emptyMessage, value);
         }
 
-
         public MainPageViewModel()
         {
-            Instance = this; // СИНГЛТОН ЭТО АНТИ-ПАТТЕРН
-
             AddWordCommand = new Command(OnAddWord);
             StartTrainerCommand = new Command(OnStartTrainer);
             OpenSettingsCommand = new Command(OnOpenSettings);
@@ -89,79 +83,45 @@ namespace EngishMotherFucker.ViewModels
 
             SelectedOption = SearchCriterionOptions.First();
 
-            //for (int i = 0; i < 100; i++)
+            _ = LoadWordsFromDatabase();
+
+            //WeakReferenceMessenger.Default.Register<WordAddedMessage>(this, async (r, m) =>
             //{
-            //    Words.Add(new WordModel { Word = "Run", DefinitionEn = "move fast" });
-            //}
+            //    if (Words == null)
+            //        return;
 
-            var saved = WordStorage.LoadWords();
-            if (saved is { Count: > 0 })
-            {
-                Words = new ObservableCollection<WordModel>(saved);
-            }
-            else
-            {
-                Words = new ObservableCollection<WordModel>
-                {
-                    new()
-                    {
-                        Word = "Algorithm",
-                        Translation = "Алгоритм",
-                        PartOfSpeech = "Существительное",
-                        Topic = "Программирование",
-                        DefinitionEn = "A step-by-step procedure used to solve a problem or perform a task.",
-                        DefinitionRu = "Пошаговая последовательность действий для решения задачи или выполнения операции."
-                    },
-                    new()
-                    {
-                        Word = "Variable",
-                        Translation = "Переменная",
-                        PartOfSpeech = "Существительное",
-                        Topic = "Программирование",
-                        DefinitionEn = "A storage location identified by a name used to hold data.",
-                        DefinitionRu = "Именованная область памяти, используемая для хранения данных."
-                    },
-                    new()
-                    {
-                        Word = "Bug",
-                        Translation = "Ошибка",
-                        PartOfSpeech = "Существительное",
-                        Topic = "Тестирование",
-                        DefinitionEn = "An error or flaw in software that causes it to produce incorrect or unexpected results.",
-                        DefinitionRu = "Ошибка или сбой в программе, вызывающий неправильную или неожиданную работу."
-                    },
-                    new()
-                    {
-                        Word = "Cloud",
-                        Translation = "Облако",
-                        PartOfSpeech = "Существительное",
-                        Topic = "Технологии",
-                        DefinitionEn = "A network of remote servers that store and manage data and applications over the internet.",
-                        DefinitionRu = "Сеть удалённых серверов для хранения и управления данными и приложениями через интернет."
-                    },
-                    new()
-                    {
-                        Word = "Loop",
-                        Translation = "Цикл",
-                        PartOfSpeech = "Существительное",
-                        Topic = "Программирование",
-                        DefinitionEn = "A sequence of instructions that repeats until a certain condition is met.",
-                        DefinitionRu = "Последовательность инструкций, которая повторяется до выполнения определённого условия."
-                    }
-                };
+            //    if (!Words.Any(w => w.Word == m.Value.Word && w.Translation == m.Value.Translation))
+            //    {
+            //        await App.Database.SaveWordAsync(m.Value);
+            //        Words.Add(m.Value);
+            //        ApplyFilter();
+            //    }
+            //});
 
-                WordStorage.SaveWords(Words.ToList());
-            }
-
-            ApplyFilter();
-
-            WeakReferenceMessenger.Default.Register<WordAddedMessage>(this, (r, m) =>
-            {
-                Words.Add(m.Value);
-                ApplyFilter();
-                WordStorage.SaveWords(Words.ToList());
-            });
         }
+
+        ~MainPageViewModel()
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        }
+
+        private async Task LoadWordsFromDatabase()
+        {
+            var saved = await App.Database.GetWordsAsync();
+            Words = new ObservableCollection<WordModel>(saved);
+            ApplyFilter();
+        }
+
+        public async Task AddWordAsync(WordModel word)
+        {
+            if (!Words.Any(w => w.Word == word.Word && w.Translation == word.Translation))
+            {
+                await App.Database.SaveWordAsync(word);
+                Words.Add(word);
+                ApplyFilter();
+            }
+        }
+
 
         public void ApplyFilter()
         {
@@ -204,19 +164,6 @@ namespace EngishMotherFucker.ViewModels
             }
         }
 
-
-
-        public void AddWord(WordModel word)
-        {
-            Words.Add(word);
-            ApplyFilter();
-        }
-
-        private async void OnAddWord()
-        {
-            RequestAddWordPage?.Invoke();
-        }
-
         private void OnStartTrainer()
         {
             RequestStartTrainer?.Invoke();
@@ -225,6 +172,11 @@ namespace EngishMotherFucker.ViewModels
         private void OnOpenSettings()
         {
             RequestOpenSettings?.Invoke();
+        }
+
+        private void OnAddWord()
+        {
+            RequestAddWordPage?.Invoke();
         }
 
         private void OnSetCriterion(string parameter)

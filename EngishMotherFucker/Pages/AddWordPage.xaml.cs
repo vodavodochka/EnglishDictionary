@@ -1,14 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using EngishMotherFucker.Models;
 using EngishMotherFucker.Utils;
+using EngishMotherFucker.ViewModels;
 
 namespace EngishMotherFucker
 {
     public partial class AddWordPage : ContentPage
     {
-        public AddWordPage()
+        private readonly MainPageViewModel _viewModel;
+
+        public AddWordPage(MainPageViewModel viewModel)
         {
             InitializeComponent();
+            _viewModel = viewModel;
         }
 
         private async void OnSaveClicked(object sender, EventArgs e)
@@ -31,9 +35,18 @@ namespace EngishMotherFucker
                 Topic = TopicEntry.Text?.Trim()
             };
 
-            WeakReferenceMessenger.Default.Send(new WordAddedMessage(newWord));
+            await _viewModel.AddWordAsync(newWord); // напрямую добавляем
 
             await Navigation.PopAsync();
+        }
+
+        private async void OnCancelClicked(object sender, EventArgs e)
+        {
+            bool confirm = await DisplayAlert("Отмена", "Вы уверены, что хотите отменить добавление слова?", "Да", "Нет");
+            if (confirm)
+            {
+                await Navigation.PopAsync();
+            }
         }
     }
 }

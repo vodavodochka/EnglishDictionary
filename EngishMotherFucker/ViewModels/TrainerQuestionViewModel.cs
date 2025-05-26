@@ -31,18 +31,17 @@ namespace EngishMotherFucker.ViewModels
 
         public TrainerQuestionViewModel()
         {
-            LoadQuestions();
-            LoadNextQuestion();
+            LoadQuestionsAsync();
         }
 
-        private void LoadQuestions()
+        private async void LoadQuestionsAsync()
         {
+            var baseWords = await App.Database.GetWordsAsync();
+
             var selectedPrinciple = Preferences.Get("SelectedPrinciple", "Перевод EN > RU");
             var questionCount = Preferences.Get("QuestionCount", 10);
 
-            var baseWords = MainPageViewModel.Instance?.Words?.ToList() ?? [];
             var rng = new Random();
-
             var shuffled = baseWords.OrderBy(_ => rng.Next()).Take(questionCount).ToList();
 
             List<QuestionModel> generatedQuestions = new();
@@ -53,7 +52,6 @@ namespace EngishMotherFucker.ViewModels
                 string questionText = "";
                 string correctAnswer = "";
 
-                // Подбор случайных неправильных вариантов
                 List<string> GetDistractors(Func<WordModel, string> selector)
                 {
                     return baseWords
@@ -107,8 +105,8 @@ namespace EngishMotherFucker.ViewModels
             }
 
             Questions = generatedQuestions;
+            LoadNextQuestion();
         }
-
 
         private async void LoadNextQuestion()
         {
@@ -127,7 +125,7 @@ namespace EngishMotherFucker.ViewModels
             foreach (var opt in q.Options) CurrentOptions.Add(opt);
             FeedbackText = string.Empty;
 
-            AreOptionsEnabled = true; // Разрешаем выбор
+            AreOptionsEnabled = true;
 
             OnPropertyChanged(nameof(CurrentQuestionText));
             OnPropertyChanged(nameof(CurrentOptions));
@@ -138,7 +136,7 @@ namespace EngishMotherFucker.ViewModels
         {
             if (!AreOptionsEnabled) return;
 
-            AreOptionsEnabled = false; // Блокируем выбор после первого ответа
+            AreOptionsEnabled = false;
 
             var correct = Questions[currentIndex].CorrectAnswer;
             if (selected == correct)
@@ -161,5 +159,4 @@ namespace EngishMotherFucker.ViewModels
             });
         }
     }
-
 }

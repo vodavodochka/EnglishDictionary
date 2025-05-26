@@ -3,6 +3,7 @@ using Android.Views;
 using static Android.Provider.UserDictionary;
 #endif
 
+using CommunityToolkit.Mvvm.Messaging;
 using EngishMotherFucker.Models;
 using EngishMotherFucker.Pages;
 using EngishMotherFucker.ViewModels;
@@ -29,8 +30,9 @@ namespace EngishMotherFucker
 
         private async void OnRequestAddWordPage()
         {
-            await Navigation.PushAsync(new AddWordPage());
+            await Navigation.PushAsync(new AddWordPage(ViewModel));
         }
+
 
         private async void OnStartTrainer()
         {
@@ -57,6 +59,13 @@ namespace EngishMotherFucker
         {
             // Всё обрабатывается в ViewModel-и
         }
+
+        //protected override void OnDisappearing()
+        //{
+        //    base.OnDisappearing();
+        //    if (BindingContext is MainPageViewModel vm)
+        //        WeakReferenceMessenger.Default.UnregisterAll(vm);
+        //}
 
     }
 }
