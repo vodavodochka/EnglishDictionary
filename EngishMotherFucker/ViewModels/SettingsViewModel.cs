@@ -62,21 +62,26 @@ namespace EngishMotherFucker.ViewModels
             try
             {
                 string fileName = $"dictionary_export_{DateTime.Now:yyyyMMddHHmmss}.json";
-                string downloadsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                string filePath = Path.Combine(downloadsPath, fileName);
+                string directory = FileSystem.Current.AppDataDirectory;
+                string filePath = Path.Combine(directory, fileName);
 
                 var words = await App.Database.GetWordsAsync();
-
                 string json = JsonConvert.SerializeObject(words, Newtonsoft.Json.Formatting.Indented);
+
                 await File.WriteAllTextAsync(filePath, json);
 
-                await Application.Current.MainPage.DisplayAlert("Успех", $"Файл сохранён в:\n{filePath}", "OK");
+                await Share.Default.RequestAsync(new ShareFileRequest
+                {
+                    Title = "Экспорт словаря",
+                    File = new ShareFile(filePath)
+                });
             }
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Ошибка", $"Не удалось экспортировать: {ex.Message}", "OK");
             }
         }
+
 
         private async void OnImport()
         {
