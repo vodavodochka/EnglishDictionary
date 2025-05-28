@@ -72,7 +72,7 @@ namespace EngishMotherFucker.Utils
                     case "Определение EN":
                         correctAnswer = word.Translation;
                         options = GetDistractors(w => w.Translation);
-                        questionText = $"Угадай слово: {word.DefinitionEn}";
+                        questionText = $"Что это: {word.DefinitionEn}";
                         break;
 
                     default:
