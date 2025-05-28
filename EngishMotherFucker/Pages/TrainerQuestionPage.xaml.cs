@@ -16,6 +16,11 @@ namespace EngishMotherFucker
             {
                 (BindingContext as TrainerQuestionViewModel)?.CheckAnswer(selected);
             }
+
+            if (sender is CollectionView collectionView)
+            {
+                collectionView.SelectedItem = null;
+            }
         }
 
     }

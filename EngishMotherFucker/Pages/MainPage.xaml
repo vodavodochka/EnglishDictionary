@@ -9,6 +9,27 @@
     <ContentPage.BindingContext>
         <viewModels:MainPageViewModel/>
     </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <!--
+            МАЙКРОСОФТ - ХУЕСОСЫ, ПОЧЕМУ ЧТОБЫ УБРАТЬ ОРАНЖЕВОЕ ВЫДЕЛЕНИЕ
+            НА АНДРОИД, НАДО ПОЛ ИНТЕРНЕТА ОБЫСКАТЬ. BULLSHIT
+        -->
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                            Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
     <Grid RowDefinitions="Auto, Auto, *"
           Padding="10">
 
