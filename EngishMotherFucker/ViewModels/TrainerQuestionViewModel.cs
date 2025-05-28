@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using EngishMotherFucker.Models;
+using EngishMotherFucker.Utils;
 
 namespace EngishMotherFucker.ViewModels
 {
@@ -37,75 +38,35 @@ namespace EngishMotherFucker.ViewModels
         private async void LoadQuestionsAsync()
         {
             var baseWords = await App.Database.GetWordsAsync();
-
             var selectedPrinciple = Preferences.Get("SelectedPrinciple", "Перевод EN > RU");
             var questionCount = Preferences.Get("QuestionCount", 10);
 
-            var rng = new Random();
-            var shuffled = baseWords.OrderBy(_ => rng.Next()).Take(questionCount).ToList();
-
-            List<QuestionModel> generatedQuestions = new();
-
-            foreach (var word in shuffled)
+            try
             {
-                List<string> options;
-                string questionText = "";
-                string correctAnswer = "";
+                Questions = TrainerQuestionGenerator.Generate(baseWords, selectedPrinciple, questionCount);
 
-                List<string> GetDistractors(Func<WordModel, string> selector)
+                if (Questions.Count == 0)
                 {
-                    return baseWords
-                        .Where(w => selector(w) != selector(word))
-                        .Select(selector)
-                        .Distinct()
-                        .OrderBy(_ => rng.Next())
-                        .Take(3)
-                        .ToList();
+                    await Application.Current.MainPage.DisplayAlert(
+                        "Недостаточно слов",
+                        "Для выбранного режима тренировки недостаточно слов. Пожалуйста, добавьте хотя бы одно подходящее слово.",
+                        "Ок");
+
+                    await Application.Current.MainPage.Navigation.PopAsync(); // вернуться назад
+                    return;
                 }
 
-                switch (selectedPrinciple)
-                {
-                    case "Перевод EN > RU":
-                        correctAnswer = word.Translation;
-                        options = GetDistractors(w => w.Translation);
-                        options.Add(correctAnswer);
-                        options = options.OrderBy(_ => rng.Next()).ToList();
-                        questionText = $"Переведи слово: {word.Word}";
-                        break;
-
-                    case "Перевод RU > EN":
-                        correctAnswer = word.Word;
-                        options = GetDistractors(w => w.Word);
-                        options.Add(correctAnswer);
-                        options = options.OrderBy(_ => rng.Next()).ToList();
-                        questionText = $"Переведи слово: {word.Translation}";
-                        break;
-
-                    case "Определение RU":
-                        correctAnswer = word.Translation;
-                        options = GetDistractors(w => w.Translation);
-                        options.Add(correctAnswer);
-                        options = options.OrderBy(_ => rng.Next()).ToList();
-                        questionText = $"Что означает: {word.DefinitionRu}";
-                        break;
-
-                    case "Определение EN":
-                        correctAnswer = word.Word;
-                        options = GetDistractors(w => w.Word);
-                        options.Add(correctAnswer);
-                        options = options.OrderBy(_ => rng.Next()).ToList();
-                        questionText = $"What does it mean: {word.DefinitionEn}";
-                        break;
-
-                    default:
-                        continue;
-                }
-
-                generatedQuestions.Add(new QuestionModel(questionText, options.ToArray(), correctAnswer));
+                LoadNextQuestion();
             }
+            catch (InvalidOperationException ex)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Ошибка",
+                    ex.Message,
+                    "Ок");
 
-            Questions = generatedQuestions;
-            LoadNextQuestion();
+                await Application.Current.MainPage.Navigation.PopAsync(); // вернуться назад
+            }
         }
 
         private async void LoadNextQuestion()

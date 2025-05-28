@@ -25,11 +25,11 @@
                    Placeholder="Например, существительное"/>
 
             <Label Text="Определение (англ.)"/>
-            <Entry Text="{Binding Word.DefinitionRu}"
+            <Entry Text="{Binding Word.DefinitionEn}"
                    Placeholder="Описание на английском"/>
 
             <Label Text="Определение (рус.)"/>
-            <Entry Text="{Binding Word.DefinitionEn}"
+            <Entry Text="{Binding Word.DefinitionRu}"
                    Placeholder="Описание на русском"/>
 
             <Label Text="Примеры использования"/>
