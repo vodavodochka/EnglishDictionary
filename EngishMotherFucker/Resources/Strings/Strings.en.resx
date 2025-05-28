@@ -118,99 +118,99 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Main_Page_Add_New_Word_Button" xml:space="preserve">
-    <value>Добавить слово</value>
+    <value>Add new word</value>
   </data>
   <data name="Edit_Word_Delete_Button" xml:space="preserve">
-    <value>Удалить</value>
+    <value>Delete</value>
   </data>
   <data name="Edit_Word_Save_Button" xml:space="preserve">
-    <value>Сохранить</value>
+    <value>Save</value>
   </data>
   <data name="Settings_Database_Title" xml:space="preserve">
-    <value>База данных:</value>
+    <value>Database:</value>
   </data>
   <data name="Settings_Training_Title" xml:space="preserve">
-    <value>Настройки тренажера:</value>
+    <value>Practice Settings:</value>
   </data>
   <data name="Main_Page_Start_Training_Button" xml:space="preserve">
-    <value>Тренажер</value>
+    <value>Practice</value>
   </data>
   <data name="Settings_Export_Database" xml:space="preserve">
-    <value>Экспортировать базу</value>
+    <value>Export database</value>
   </data>
   <data name="Settings_Import_Database" xml:space="preserve">
-    <value>Импортировать базу</value>
+    <value>Import database</value>
   </data>
   <data name="Settings_Training_Questions_Amount" xml:space="preserve">
-    <value>Количество вопросов: </value>
+    <value>Number of questions: </value>
   </data>
   <data name="Settings_Training_Questions_Forming_Principle" xml:space="preserve">
-    <value>Принцип формирования вопросов:</value>
+    <value>Question formation method:</value>
   </data>
   <data name="Training_Welcome_Message" xml:space="preserve">
-    <value>Добро пожаловать в тренажёр!</value>
+    <value>Welcome to the trainer!</value>
   </data>
   <data name="Training_Description" xml:space="preserve">
-    <value>Тут будет краткое описание...</value>
+    <value>A brief description will appear here…</value>
   </data>
   <data name="Training_Principle" xml:space="preserve">
-    <value>Принцип:</value>
+    <value>Method:</value>
   </data>
   <data name="Training_Start_Training" xml:space="preserve">
-    <value>Начать тренировку</value>
+    <value>Start practice session</value>
   </data>
   <data name="Main_Page_Search_Placeholder" xml:space="preserve">
-    <value>Поиск</value>
+    <value>Search</value>
   </data>
   <data name="Training_Task_Translate" xml:space="preserve">
-    <value>Переведи слово: </value>
+    <value>Translate the given word:</value>
   </data>
   <data name="Edit_Word_Word_Title" xml:space="preserve">
-    <value>Слово</value>
+    <value>Word</value>
   </data>
   <data name="Edit_Word_Translation_Title" xml:space="preserve">
-    <value>Перевод</value>
+    <value>Translation</value>
   </data>
   <data name="Edit_Word_Transcription_Title" xml:space="preserve">
-    <value>Транскрипция</value>
+    <value>Transcription</value>
   </data>
   <data name="Edit_Word_Part_Of_Speech_Title" xml:space="preserve">
-    <value>Часть речи</value>
+    <value>Part of speech</value>
   </data>
   <data name="Edit_Word_Definition_En_Title" xml:space="preserve">
-    <value>Определение (англ.)</value>
+    <value>Definition (EN)</value>
   </data>
   <data name="Edit_Word_Definition_Ru_Title" xml:space="preserve">
-    <value>Определение (рус.)</value>
+    <value>Description in Russian</value>
   </data>
   <data name="Edit_Word_Usage_Example_Title" xml:space="preserve">
-    <value>Примеры использования</value>
+    <value>Usage examples</value>
   </data>
   <data name="Edit_Word_Topic_Title" xml:space="preserve">
-    <value>Тема</value>
+    <value>Topic</value>
   </data>
   <data name="Edit_Word_Word_Placeholder" xml:space="preserve">
-    <value>Введите слово</value>
+    <value>Enter a word</value>
   </data>
   <data name="Edit_Word_Translation_Placeholder" xml:space="preserve">
-    <value>Введите перевод</value>
+    <value>Enter a translation</value>
   </data>
   <data name="Edit_Word_Transcription_Placeholder" xml:space="preserve">
-    <value>Например, [æpl]</value>
+    <value>For example: [æpl]</value>
   </data>
   <data name="Edit_Word_Part_Of_Speech_Placeholder" xml:space="preserve">
-    <value>Например, существительное</value>
+    <value>For example: noun</value>
   </data>
   <data name="Edit_Word_Definition_En_Placeholder" xml:space="preserve">
-    <value>Описание на английском</value>
+    <value>Description in English</value>
   </data>
   <data name="Edit_Word_Definition_Ru_Placeholder" xml:space="preserve">
-    <value>Описание на русском</value>
+    <value>Russian description</value>
   </data>
   <data name="Edit_Word_Topic_Placeholder" xml:space="preserve">
-    <value>Категория или тема</value>
+    <value>Category or topic</value>
   </data>
   <data name="Edit_Word_Usage_Example_Placeholder" xml:space="preserve">
-    <value>Примеры</value>
+    <value>Examples</value>
   </data>
 </root>

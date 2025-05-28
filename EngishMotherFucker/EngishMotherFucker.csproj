@@ -70,6 +70,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Resources\Strings\Strings.en.Designer.cs">
+	    <DependentUpon>Strings.en.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
 	  <Compile Update="Resources\Strings\Strings.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -78,8 +83,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Strings\Strings.en.resx">
+	    <LastGenOutput>Strings.en.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Strings\Strings.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Strings.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>
