@@ -28,21 +28,11 @@ namespace EngishMotherFucker.ViewModels
 
         private async Task OnSaveAsync()
         {
-            var existing = _mainPageViewModel.Words.FirstOrDefault(w => w.Id == Word.Id);
-            if (existing != null)
-            {
-                existing.Word = Word.Word;
-                existing.Translation = Word.Translation;
-                existing.PartOfSpeech = Word.PartOfSpeech;
-                existing.Topic = Word.Topic;
-                existing.DefinitionEn = Word.DefinitionEn;
-                existing.DefinitionRu = Word.DefinitionRu;
-            }
-
-            await App.Database.SaveWordAsync(existing ?? Word);
-            _mainPageViewModel.ApplyFilter();
+            await App.Database.SaveWordAsync(Word);
+            await MainPageViewModel.Instance?.ReloadWordsFromDatabaseAsync();
             await Application.Current.MainPage.Navigation.PopAsync();
         }
+
 
         private async Task OnDeleteAsync()
         {

@@ -1,66 +1,138 @@
-﻿using System.Collections.ObjectModel;
+﻿using EngishMotherFucker.Models;
+using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
-using EngishMotherFucker.ViewModels;
+using System.Xml;
 
-public class SettingsViewModel : BaseViewModel
+namespace EngishMotherFucker.ViewModels
 {
-    private int _questionCount;
-    private string _selectedPrinciple;
-
-    public ICommand ExportCommand { get; }
-    public ICommand ImportCommand { get; }
-
-    public ObservableCollection<string> AvailablePrinciples { get; }
-
-    public int QuestionCount
+    public class SettingsViewModel : BaseViewModel
     {
-        get => _questionCount;
-        set
+        private int _questionCount;
+        private string _selectedPrinciple;
+
+        public ICommand ExportCommand { get; }
+        public ICommand ImportCommand { get; }
+
+        public ObservableCollection<string> AvailablePrinciples { get; }
+
+        public int QuestionCount
         {
-            if (SetProperty(ref _questionCount, value))
+            get => _questionCount;
+            set
             {
-                Preferences.Set(nameof(QuestionCount), value);
+                if (SetProperty(ref _questionCount, value))
+                {
+                    Preferences.Set(nameof(QuestionCount), value);
+                }
             }
         }
-    }
 
-    public string SelectedPrinciple
-    {
-        get => _selectedPrinciple;
-        set
+        public string SelectedPrinciple
         {
-            if (SetProperty(ref _selectedPrinciple, value))
+            get => _selectedPrinciple;
+            set
             {
-                Preferences.Set(nameof(SelectedPrinciple), value);
+                if (SetProperty(ref _selectedPrinciple, value))
+                {
+                    Preferences.Set(nameof(SelectedPrinciple), value);
+                }
             }
         }
-    }
 
-    public SettingsViewModel()
-    {
-        ExportCommand = new Command(OnExport);
-        ImportCommand = new Command(OnImport);
+        public SettingsViewModel()
+        {
+            ExportCommand = new Command(OnExport);
+            ImportCommand = new Command(OnImport);
 
-        AvailablePrinciples =
-        [
-            "Перевод EN > RU",
-            "Перевод RU > EN",
-            "Определение RU",
-            "Определение EN",
-        ];
+            AvailablePrinciples = new ObservableCollection<string>
+            {
+                "Перевод EN > RU",
+                "Перевод RU > EN",
+                "Определение RU",
+                "Определение EN",
+            };
 
-        // Загружаем сохранённые значения или берём стандартные
-        QuestionCount = Preferences.Get(nameof(QuestionCount), 10);
-        SelectedPrinciple = Preferences.Get(nameof(SelectedPrinciple), AvailablePrinciples[0]);
-    }
+            QuestionCount = Preferences.Get(nameof(QuestionCount), 10);
+            SelectedPrinciple = Preferences.Get(nameof(SelectedPrinciple), AvailablePrinciples[0]);
+        }
 
-    private async void OnExport()
-    {
-        await Application.Current.MainPage.DisplayAlert("Экспорт", "Экспорт базы в файл (заглушка)", "OK");
-    }
+        private async void OnExport()
+        {
+            try
+            {
+                string fileName = $"dictionary_export_{DateTime.Now:yyyyMMddHHmmss}.json";
+                string downloadsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string filePath = Path.Combine(downloadsPath, fileName);
 
-    private async void OnImport()
-    {
-        await Application.Current.MainPage.DisplayAlert("Импорт", "Импорт базы из файла (заглушка)", "OK");
+                var words = await App.Database.GetWordsAsync();
+
+                string json = JsonConvert.SerializeObject(words, Newtonsoft.Json.Formatting.Indented);
+                await File.WriteAllTextAsync(filePath, json);
+
+                await Application.Current.MainPage.DisplayAlert("Успех", $"Файл сохранён в:\n{filePath}", "OK");
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Ошибка", $"Не удалось экспортировать: {ex.Message}", "OK");
+            }
+        }
+
+        private async void OnImport()
+        {
+            try
+            {
+                var fileResult = await FilePicker.Default.PickAsync(new PickOptions
+                {
+                    PickerTitle = "Выберите файл для импорта",
+                    FileTypes = new FilePickerFileType(
+                        new Dictionary<DevicePlatform, IEnumerable<string>>
+                        {
+                    { DevicePlatform.WinUI, new[] { ".json" } },
+                    { DevicePlatform.Android, new[] { "application/json" } }
+                        })
+                });
+
+                if (fileResult == null) return;
+
+                string json = await File.ReadAllTextAsync(fileResult.FullPath);
+                var words = JsonConvert.DeserializeObject<List<WordModel>>(json);
+
+                if (words == null || words.Count == 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Ошибка", "Файл пуст или повреждён", "OK");
+                    return;
+                }
+
+                var db = App.Database;
+                var existingWords = await db.GetWordsAsync();
+
+                int addedCount = 0;
+
+                foreach (var word in words)
+                {
+                    bool alreadyExists = existingWords.Any(w =>
+                        w.Word == word.Word && w.Translation == word.Translation);
+
+                    if (!alreadyExists)
+                    {
+                        word.Id = 0; // сбросим Id для нового добавления
+                        await db.SaveWordAsync(word);
+                        addedCount++;
+                    }
+                }
+
+                await MainPageViewModel.Instance?.ReloadWordsFromDatabaseAsync();
+
+                await Application.Current.MainPage.DisplayAlert(
+                    "Импорт завершён",
+                    $"Импортировано {addedCount} новых слов. Повторяющиеся пропущены.",
+                    "OK");
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Ошибка", $"Не удалось импортировать: {ex.Message}", "OK");
+            }
+        }
     }
 }

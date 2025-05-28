@@ -8,6 +8,8 @@ namespace EngishMotherFucker.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {
+        public static MainPageViewModel Instance { get; private set; }
+
         public event Action RequestAddWordPage;
         public event Action RequestStartTrainer;
         public event Action RequestOpenSettings;
@@ -76,6 +78,8 @@ namespace EngishMotherFucker.ViewModels
 
         public MainPageViewModel()
         {
+            Instance = this;
+
             AddWordCommand = new Command(OnAddWord);
             StartTrainerCommand = new Command(OnStartTrainer);
             OpenSettingsCommand = new Command(OnOpenSettings);
@@ -84,20 +88,6 @@ namespace EngishMotherFucker.ViewModels
             SelectedOption = SearchCriterionOptions.First();
 
             _ = LoadWordsFromDatabase();
-
-            //WeakReferenceMessenger.Default.Register<WordAddedMessage>(this, async (r, m) =>
-            //{
-            //    if (Words == null)
-            //        return;
-
-            //    if (!Words.Any(w => w.Word == m.Value.Word && w.Translation == m.Value.Translation))
-            //    {
-            //        await App.Database.SaveWordAsync(m.Value);
-            //        Words.Add(m.Value);
-            //        ApplyFilter();
-            //    }
-            //});
-
         }
 
         ~MainPageViewModel()
@@ -106,6 +96,13 @@ namespace EngishMotherFucker.ViewModels
         }
 
         private async Task LoadWordsFromDatabase()
+        {
+            var saved = await App.Database.GetWordsAsync();
+            Words = new ObservableCollection<WordModel>(saved);
+            ApplyFilter();
+        }
+
+        public async Task ReloadWordsFromDatabaseAsync()
         {
             var saved = await App.Database.GetWordsAsync();
             Words = new ObservableCollection<WordModel>(saved);
@@ -121,7 +118,6 @@ namespace EngishMotherFucker.ViewModels
                 ApplyFilter();
             }
         }
-
 
         public void ApplyFilter()
         {
