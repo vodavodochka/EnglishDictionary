@@ -31,6 +31,9 @@ namespace EngishMotherFucker.Database
         public Task<int> DeleteWordAsync(WordModel word) =>
             _database.DeleteAsync(word);
 
+        public Task<int> DeleteAllWordsAsync() =>
+    _database.DeleteAllAsync<WordModel>();
+
         public void Dispose()
         {
             var conn = _database.GetConnection();

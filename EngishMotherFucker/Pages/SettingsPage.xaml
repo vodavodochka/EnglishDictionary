@@ -12,7 +12,11 @@
                 <Label Text="База данных:" FontAttributes="Bold" FontSize="18"/>
                 <Button Text="📤 Экспортировать базу" Command="{Binding ExportCommand}"/>
                 <Button Text="📥 Импортировать базу" Command="{Binding ImportCommand}"/>
+                <Button Text="🗑️ Очистить базу данных"
+            Command="{Binding ClearDatabaseCommand}"
+            BackgroundColor="Red"/>
             </VerticalStackLayout>
+
 
             <!-- Настройки тренажера -->
             <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*" RowSpacing="10">

@@ -13,6 +13,7 @@ namespace EngishMotherFucker.ViewModels
 
         public ICommand ExportCommand { get; }
         public ICommand ImportCommand { get; }
+        public ICommand ClearDatabaseCommand { get; }
 
         public ObservableCollection<string> AvailablePrinciples { get; }
 
@@ -44,6 +45,7 @@ namespace EngishMotherFucker.ViewModels
         {
             ExportCommand = new Command(OnExport);
             ImportCommand = new Command(OnImport);
+            ClearDatabaseCommand = new Command(async () => await OnClearDatabaseAsync());
 
             AvailablePrinciples = new ObservableCollection<string>
             {
@@ -138,6 +140,24 @@ namespace EngishMotherFucker.ViewModels
             {
                 await Application.Current.MainPage.DisplayAlert("Ошибка", $"Не удалось импортировать: {ex.Message}", "OK");
             }
+        }
+
+        private async Task OnClearDatabaseAsync()
+        {
+            bool confirm = await Application.Current.MainPage.DisplayAlert(
+                "Confirm",
+                "Are you sure you want to delete all words from the database?",
+                "Yes", "No");
+
+            if (!confirm) return;
+
+            await App.Database.DeleteAllWordsAsync();
+            await MainPageViewModel.Instance?.ReloadWordsFromDatabaseAsync();
+
+            await Application.Current.MainPage.DisplayAlert(
+                "Success",
+                "All words have been deleted.",
+                "OK");
         }
     }
 }
